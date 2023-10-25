@@ -6,10 +6,11 @@ public class Bullet : MonoBehaviour
 {
     private int dameg = 1;
     private float speed = 5;
-
-    private void OnCollisionEnter2D(Collision2D other) {
+    
+    private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Enemy"){
             dameg--;
+            Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "Gabarit"){
             dameg = 0;
