@@ -28,6 +28,13 @@ public class Player : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "Enemy"){
+            helth --;
+            Destroy(other.gameObject);
+        }
+    }
+
 
     private void FixedUpdate() {
         if (move != 0) PlayerMove();
