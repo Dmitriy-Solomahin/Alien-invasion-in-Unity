@@ -1,22 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyShipsControler : MonoBehaviour
 {
-    [SerializeField] private float speed = 1f;
     [SerializeField] private GameObject prefabShip;
-    private List<GameObject> ships;
+    private float speed = 1f;
+    [SerializeField] private List<GameObject> ships;
     private int orientation = 1;
-    private int numberOfEnemies = 14;
+    private int numberOfEnemies = 7;
+    private Vector3 startPosition;
+
+    private void OnEnable() {
+        EventManager.OnKillingEnemy += EnemyDistroy;
+    }
+    private void OnDisable() {
+        EventManager.OnKillingEnemy -= EnemyDistroy;
+    }
 
     private void Awake() {
         ships = new List<GameObject>();
-        CreateEnemies();
+        startPosition = transform.position; //new Vector3(-7,3,0);
+        CreateEnemies(1);
+    }
+    private void Start() {
+        
     }
 
     private void FixedUpdate() {
         transform.position += transform.right * orientation * speed * Time.fixedDeltaTime;
+        if(ships.Count == 0) EventManager.OnLevelsComplit.Invoke();
     }
     public void ShipsTurn(int orient) {
         if (orientation != orient){
@@ -24,11 +38,12 @@ public class EnemyShipsControler : MonoBehaviour
             orientation = orient;
         }
     }
-    private void CreateEnemies(){
+    public void CreateEnemies(int level){
+        transform.position = startPosition;
         int y = 0;
-        for (int i = 0, x = 0 ; i < numberOfEnemies; i++ ,x++)
+        for (int i = 0, x = 0 ; i < numberOfEnemies * level; i++ ,x++)
         {
-            if (i == 7){
+            if (i%7 == 0){
                 y-= 2;
                 x = 0;
             }
@@ -36,6 +51,14 @@ public class EnemyShipsControler : MonoBehaviour
             ship.transform.parent = transform;
             ships.Add(ship);
         }
+    }
+    private void EnemyDistroy(GameObject enemy)
+    {
+        ships.Remove(enemy);
+    }
+
+    public List<GameObject> GetListEnemies(){
+        return ships;
     }
    
 }

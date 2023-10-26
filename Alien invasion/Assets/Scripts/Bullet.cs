@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Enemy"){
             dameg--;
+            EventManager.OnKillingEnemy?.Invoke(other.gameObject);
             Destroy(other.gameObject);
         }
         if(other.gameObject.tag == "Gabarit"){
