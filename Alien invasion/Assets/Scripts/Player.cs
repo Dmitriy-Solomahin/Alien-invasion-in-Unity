@@ -15,6 +15,18 @@ public class Player : MonoBehaviour
     private void Update() {
         move = Input.GetAxisRaw("Horizontal");
         if(Input.GetKeyDown(KeyCode.Space)) Shot();
+
+        if(helth<=0){
+            Destroy(gameObject);
+            EventManager.OnGameOver?.Invoke();
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.tag == "Enemy"){
+            helth --;
+            EventManager.OnKillingEnemy?.Invoke(other.gameObject);
+            Destroy(other.gameObject);
+        }
     }
 
     private void FixedUpdate() {

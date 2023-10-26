@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +11,12 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable() {
         EventManager.OnLevelsComplit += LevelUp;
+        EventManager.OnGameOver += GameOver;
     }
+
     private void OnDisable() {
         EventManager.OnLevelsComplit -= LevelUp;
+        EventManager.OnGameOver -= GameOver;
     }
 
     private void Start() {
@@ -21,6 +25,11 @@ public class GameManager : MonoBehaviour
     private void LevelUp() {
         level++;
         enemiesController.CreateEnemies(level);
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("GameOver");
     }
 
 }

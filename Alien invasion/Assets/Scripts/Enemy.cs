@@ -16,6 +16,9 @@ public class Enemy : MonoBehaviour
             else if (other.gameObject.name == "Left"){
                 parent.ShipsTurn(1);
             }
+            else if (other.gameObject.name == "Down"){
+                EventManager.OnGameOver?.Invoke();
+            }
         }
     }
 }

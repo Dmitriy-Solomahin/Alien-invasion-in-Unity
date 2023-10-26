@@ -7,4 +7,5 @@ public static class EventManager
 {
     public static Action<GameObject> OnKillingEnemy;
     public static Action OnLevelsComplit;
+    public static Action OnGameOver;
 }
