@@ -21,13 +21,10 @@ public class EnemyShipsControler : MonoBehaviour
 
     private void Awake() {
         ships = new List<GameObject>();
-        startPosition = transform.position; //new Vector3(-7,3,0);
+        startPosition = transform.position; 
         CreateEnemies(1);
     }
-    private void Start() {
-        
-    }
-
+    
     private void FixedUpdate() {
         transform.position += transform.right * orientation * speed * Time.fixedDeltaTime;
         if(ships.Count == 0) EventManager.OnLevelsComplit.Invoke();

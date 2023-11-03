@@ -22,22 +22,23 @@ public class Player : MonoBehaviour
         }
     }
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.tag == "Enemy"){
-            helth --;
-            EventManager.OnKillingEnemy?.Invoke(other.gameObject);
-            Destroy(other.gameObject);
-        }
+        TakingDamage(other.gameObject, true);
     }
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag == "Enemy"){
-            helth --;
-            Destroy(other.gameObject);
-        }
+        TakingDamage(other.gameObject);
     }
-
 
     private void FixedUpdate() {
         if (move != 0) PlayerMove();
+    }
+
+    private void TakingDamage(GameObject other, bool isEnemy = false){
+        if (other.tag == "Enemy"){
+            helth --;
+            EventManager.OnTakingDamage?.Invoke();
+            Destroy(other);
+        }
+        if (isEnemy) EventManager.OnKillingEnemy?.Invoke(other.gameObject);
     }
 
     private void PlayerMove()
