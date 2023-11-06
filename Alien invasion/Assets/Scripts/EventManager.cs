@@ -9,4 +9,5 @@ public static class EventManager
     public static Action OnLevelsComplit;
     public static Action OnGameOver;
     public static Action OnTakingDamage;
+    public static Action<bool> OnGameActive;
 }

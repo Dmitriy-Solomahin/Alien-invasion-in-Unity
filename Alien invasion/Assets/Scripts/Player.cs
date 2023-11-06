@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
             anim.Play();
             Instantiate(prefabBang, transform.position, Quaternion.identity);
 
-            if (isEnemy) EventManager.OnKillingEnemy?.Invoke(other.gameObject);    
+            if (isEnemy) EventManager.OnKillingEnemy?.Invoke(other);    
         }
     }
 
