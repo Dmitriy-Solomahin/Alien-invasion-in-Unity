@@ -6,9 +6,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private int helth = 3;
-    [SerializeField] private int guns = 1;
-    [SerializeField] private int dameg = 1;
+    // [SerializeField] private int guns = 1;
+    // [SerializeField] private int dameg = 1;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject prefabBang;
+    private Animation anim;
     private float speed = 5;
     private float move;
 
@@ -27,7 +29,9 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         TakingDamage(other.gameObject);
     }
-
+    private void Start() {
+        anim = gameObject.GetComponent<Animation>();
+    }
     private void FixedUpdate() {
         if (move != 0) PlayerMove();
     }
@@ -37,8 +41,11 @@ public class Player : MonoBehaviour
             helth --;
             EventManager.OnTakingDamage?.Invoke();
             Destroy(other);
+            anim.Play();
+            Instantiate(prefabBang, transform.position, Quaternion.identity);
+
+            if (isEnemy) EventManager.OnKillingEnemy?.Invoke(other.gameObject);    
         }
-        if (isEnemy) EventManager.OnKillingEnemy?.Invoke(other.gameObject);
     }
 
     private void PlayerMove()

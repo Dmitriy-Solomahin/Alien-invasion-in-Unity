@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] private GameObject prefabBang;
     private int dameg = 1;
     private float speed = 5;
+    
     
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Enemy"){
             dameg--;
+            Instantiate(prefabBang, transform.position, Quaternion.identity);
             EventManager.OnKillingEnemy?.Invoke(other.gameObject);
             Destroy(other.gameObject);
         }
