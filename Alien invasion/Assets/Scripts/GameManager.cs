@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private AudioSource gameOverSound;
     private EnemyShipsControler enemiesController;
         private bool gameIsActive = true;
 
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start() {
         enemiesController = transform.GetChild(2).GetComponent<EnemyShipsControler>();
+        gameOverSound = transform.GetComponent<AudioSource>();
     }
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Escape)){
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("GameOver");
+        gameOverSound.Play();
     }
 
 }

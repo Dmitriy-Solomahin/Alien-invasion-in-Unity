@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     // [SerializeField] private int dameg = 1;
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject prefabBang;
+    [SerializeField] private AudioSource shotAudio;
+    [SerializeField] private AudioSource damageAudio;
     private Animation anim;
     private float speed = 5;
     private float move;
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
             EventManager.OnTakingDamage?.Invoke();
             Destroy(other);
             anim.Play();
+            damageAudio.Play();
             Instantiate(prefabBang, transform.position, Quaternion.identity);
 
             if (isEnemy) EventManager.OnKillingEnemy?.Invoke(other);    
@@ -56,5 +59,6 @@ public class Player : MonoBehaviour
     private void Shot()
     {
         Instantiate(bullet, transform.position + new Vector3(0,0.5f,0),transform.rotation);
+        shotAudio.Play();
     }
 }
