@@ -10,6 +10,7 @@ public class EnemyShipsControler : MonoBehaviour
     [SerializeField] private List<GameObject> ships;
     private int orientation = 1;
     private int numberOfEnemies = 7;
+    private int level = 1;
     private Vector3 startPosition;
 
     private void OnEnable() {
@@ -22,12 +23,19 @@ public class EnemyShipsControler : MonoBehaviour
     private void Awake() {
         ships = new List<GameObject>();
         startPosition = transform.position; 
-        CreateEnemies(1);
+        CreateEnemies();
+    }
+    private void Start() {
+        EventManager.OnLevelsComplit.Invoke(level);
     }
     
     private void FixedUpdate() {
         transform.position += transform.right * orientation * speed * Time.fixedDeltaTime;
-        if(ships.Count == 0) EventManager.OnLevelsComplit.Invoke();
+        if(ships.Count == 0) {
+            level++;
+            EventManager.OnLevelsComplit.Invoke(level);
+            CreateEnemies();
+        }
     }
     public void ShipsTurn(int orient) {
         if (orientation != orient){
@@ -35,7 +43,7 @@ public class EnemyShipsControler : MonoBehaviour
             orientation = orient;
         }
     }
-    public void CreateEnemies(int level){
+    public void CreateEnemies(){
         transform.position = startPosition;
         int y = 0;
         for (int i = 0, x = 0 ; i < numberOfEnemies * level; i++ ,x++)

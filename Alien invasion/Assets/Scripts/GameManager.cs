@@ -7,22 +7,16 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private EnemyShipsControler enemiesController;
-    private int enemiesCount;
-    [SerializeField] private int level = 1;
-    private bool gameIsActive = true;
+        private bool gameIsActive = true;
 
     private void OnEnable() {
-        EventManager.OnLevelsComplit += LevelUp;
         EventManager.OnGameOver += GameOver;
         EventManager.OnGameActive += GamePause;
-    }
-
+    }    
     private void OnDisable() {
-        EventManager.OnLevelsComplit -= LevelUp;
         EventManager.OnGameOver -= GameOver;
         EventManager.OnGameActive -= GamePause;
     }
-
     private void Start() {
         enemiesController = transform.GetChild(2).GetComponent<EnemyShipsControler>();
     }
@@ -36,11 +30,6 @@ public class GameManager : MonoBehaviour
         gameIsActive = isActive;
         Time.timeScale = Convert.ToInt32(gameIsActive);
     }
-    private void LevelUp() {
-        level++;
-        enemiesController.CreateEnemies(level);
-    }
-
     private void GameOver()
     {
         Debug.Log("GameOver");
