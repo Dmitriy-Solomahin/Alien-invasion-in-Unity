@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : EssencePlayer
 {
     [SerializeField] private GameObject prefabBang;
     private int dameg = 1;
@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Enemy"){
+            
             dameg--;
             Instantiate(prefabBang, transform.position, Quaternion.identity);
             EventManager.OnKillingEnemy?.Invoke(other.gameObject);

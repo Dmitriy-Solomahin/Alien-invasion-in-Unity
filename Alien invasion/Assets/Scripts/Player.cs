@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : EssencePlayer
 {
     [SerializeField] private int helth = 3;
     // [SerializeField] private int guns = 1;

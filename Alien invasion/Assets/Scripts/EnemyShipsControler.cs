@@ -5,31 +5,32 @@ using UnityEngine;
 
 public class EnemyShipsControler : MonoBehaviour
 {
-    [SerializeField] private GameObject prefabShip;
-    private float speed = 1f;
-    [SerializeField] private List<GameObject> ships;
-    private int orientation = 1;
-    private int numberOfEnemies = 7;
-    private int level = 1;
-    private Vector3 startPosition;
+    [SerializeField] GameObject prefabShip;
+    [SerializeField] List<GameObject> ships;
+    float speed = 1f;
+    int orientation = 1;
+    int numberOfEnemies = 7;
+    int numberOfLineEnemies = 3;
+    int level = 1;
+    Vector3 startPosition;
 
-    private void OnEnable() {
-        EventManager.OnKillingEnemy += EnemyDistroy;
+    void OnEnable() {
+        EventManager.OnKillingEnemy += DistroyEnemy;
     }
-    private void OnDisable() {
-        EventManager.OnKillingEnemy -= EnemyDistroy;
+    void OnDisable() {
+        EventManager.OnKillingEnemy -= DistroyEnemy;
     }
 
-    private void Awake() {
+    void Awake() {
         ships = new List<GameObject>();
         startPosition = transform.position; 
         CreateEnemies();
     }
-    private void Start() {
+    void Start() {
         EventManager.OnLevelsComplit.Invoke(level);
     }
     
-    private void FixedUpdate() {
+    void FixedUpdate() {
         transform.position += transform.right * orientation * speed * Time.fixedDeltaTime;
         if(ships.Count == 0) {
             level++;
@@ -37,18 +38,18 @@ public class EnemyShipsControler : MonoBehaviour
             CreateEnemies();
         }
     }
-    public void ShipsTurn(int orient) {
+    public void TurnEnemies(int orient) {
         if (orientation != orient){
             transform.position += transform.up * -0.25f;
             orientation = orient;
         }
     }
-    public void CreateEnemies(){
+    void CreateEnemies(){
         transform.position = startPosition;
         int y = 0;
-        for (int i = 0, x = 0 ; i < numberOfEnemies * level; i++ ,x++)
+        for (int i = 0, x = 0 ; i < numberOfEnemies * numberOfLineEnemies; i++ ,x++)
         {
-            if (i%7 == 0){
+            if (i%numberOfEnemies == 0){
                 y-= 2;
                 x = 0;
             }
@@ -57,13 +58,16 @@ public class EnemyShipsControler : MonoBehaviour
             ships.Add(ship);
         }
     }
-    private void EnemyDistroy(GameObject enemy)
+    void DistroyEnemy(GameObject enemy)
     {
         ships.Remove(enemy);
     }
-
+    void CreateEnemy(){
+        
+    }
     public List<GameObject> GetListEnemies(){
         return ships;
     }
-   
+    
+    
 }

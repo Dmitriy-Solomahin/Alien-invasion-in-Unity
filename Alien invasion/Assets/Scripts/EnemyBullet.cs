@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBullet : MonoBehaviour
+public class EnemyBullet : EssenceEnemy
 {
     private float speed = 5;
     private void OnTriggerEnter2D(Collider2D other) {
