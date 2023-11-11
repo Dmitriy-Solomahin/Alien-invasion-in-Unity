@@ -1,31 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : EssencePlayer
+public class Bullet : Essence
 {
-    [SerializeField] private GameObject prefabBang;
-    private int dameg = 1;
+    private int orientation;
     private float speed = 5;
     
-    
-    private void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.tag == "Enemy"){
-            
-            dameg--;
-            Instantiate(prefabBang, transform.position, Quaternion.identity);
-            EventManager.OnKillingEnemy?.Invoke(other.gameObject);
-            Destroy(other.gameObject);
-        }
-        if(other.gameObject.tag == "Gabarit"){
-            dameg = 0;
-        }
+    private void Start() {
+        Orientat();
     }
-    void Update()
-    {
-        if (dameg <= 0) Destroy(this.gameObject);
+    
+    protected void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.tag == "Gabarit") DestroyObj();
     }
     private void FixedUpdate() {
-        transform.position += transform.up * speed * Time.fixedDeltaTime;
+        Move();
+    }
+
+    private void Move()
+    {
+        transform.position += transform.up * speed * orientation * Time.fixedDeltaTime;
+    }
+
+    protected override void DestroyObj()
+    {
+        Destroy(this.gameObject);
+    }
+
+    private void Orientat(){
+        orientation = gameObject.tag == "Enemy"? -1 : 1;
     }
 }
