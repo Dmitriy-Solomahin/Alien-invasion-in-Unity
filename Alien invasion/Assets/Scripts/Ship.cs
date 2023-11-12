@@ -36,6 +36,6 @@ public abstract class Ship : Essence
         GameObject bullet = Instantiate(prefabBullet, transform.position - new Vector3(0, 0.5f,0),transform.rotation);
         bullet.tag = gameObject.tag;
         bullet.GetComponent<Health>().SetHealth(damage);
-        //shotAudio?.Play();
+        shotAudio?.Play();
     }
 }

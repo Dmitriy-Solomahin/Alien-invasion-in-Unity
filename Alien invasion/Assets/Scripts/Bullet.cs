@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class Bullet : Essence
 {
+    [SerializeField] private GameObject buletParent;
     private int orientation;
     private float speed = 5;
     
+    private void Awake() {
+        transform.parent = buletParent.transform;
+    }
     private void Start() {
         Orientat();
     }

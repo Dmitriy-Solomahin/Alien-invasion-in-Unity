@@ -35,9 +35,11 @@ public class Player : Ship
         for (int i = 0; i < oldHP; i++)
         {
             EventManager.OnTakingDamage?.Invoke();
+        }
+        if (hp > 0){
+            anim.Play();
+            damageAudio.Play();
         } 
-        anim.Play();
-        damageAudio.Play();
     }
 
     private void PlayerMove()
