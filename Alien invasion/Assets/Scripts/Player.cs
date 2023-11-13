@@ -5,22 +5,22 @@ using UnityEngine;
 
 public class Player : Ship
 {
-    // [SerializeField] private int guns = 1;
-    [SerializeField] private AudioSource damageAudio;
-    private Animation anim;
-    private float speed = 5;
-    private float move;
-    private int ships = 3;
+    // [SerializeField] int guns = 1;
+    [SerializeField] AudioSource damageAudio;
+    Animation anim;
+    float speed = 5;
+    float move;
+    int ships = 3;
 
-    private void Update() {
+    void Update() {
         move = Input.GetAxisRaw("Horizontal");
         if(Input.GetKeyDown(KeyCode.Space)) Shot();
     }
-    private void Start() {
+    void Start() {
         anim = gameObject.GetComponent<Animation>();
         health.SetHealth(ships);
     }
-    private void FixedUpdate() {
+    void FixedUpdate() {
         if (move != 0) PlayerMove();
     }
     protected override void DestroyObj()
@@ -41,9 +41,9 @@ public class Player : Ship
             damageAudio.Play();
         } 
     }
-
-    private void PlayerMove()
+    void PlayerMove()
     {
         transform.position += transform.right * move * speed * Time.fixedDeltaTime;
     }
+    
 }

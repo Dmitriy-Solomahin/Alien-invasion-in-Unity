@@ -5,25 +5,21 @@ using UnityEngine;
 
 public class Bullet : Essence
 {
-    [SerializeField] private GameObject buletParent;
-    private int orientation;
-    private float speed = 5;
+    int orientation;
+    float speed = 5;
     
-    private void Awake() {
-        transform.parent = buletParent.transform;
-    }
-    private void Start() {
+    void Start() {
         Orientat();
     }
     
     protected void OnTriggerEnter2D(Collider2D other) {
         if(other.gameObject.tag == "Gabarit") DestroyObj();
     }
-    private void FixedUpdate() {
+    void FixedUpdate() {
         Move();
     }
 
-    private void Move()
+    void Move()
     {
         transform.position += transform.up * speed * orientation * Time.fixedDeltaTime;
     }
@@ -33,7 +29,7 @@ public class Bullet : Essence
         Destroy(this.gameObject);
     }
 
-    private void Orientat(){
+    void Orientat(){
         orientation = gameObject.tag == "Enemy"? -1 : 1;
     }
 }

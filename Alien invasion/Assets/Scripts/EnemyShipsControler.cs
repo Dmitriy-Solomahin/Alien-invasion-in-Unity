@@ -23,8 +23,7 @@ public class EnemyShipsControler : MonoBehaviour
 
     void Awake() {
         ships = new List<GameObject>();
-        startPosition = transform.position; 
-        CreateEnemies();
+        startPosition = transform.position;
     }
     void Start() {
         EventManager.OnLevelsComplit.Invoke(level);
@@ -35,7 +34,6 @@ public class EnemyShipsControler : MonoBehaviour
         if(ships.Count == 0) {
             level++;
             EventManager.OnLevelsComplit.Invoke(level);
-            CreateEnemies();
         }
     }
     public void TurnEnemies(int orient) {
@@ -44,7 +42,7 @@ public class EnemyShipsControler : MonoBehaviour
             orientation = orient;
         }
     }
-    void CreateEnemies(){
+    public void CreateEnemies(){
         transform.position = startPosition;
         int y = 0;
         for (int i = 0, x = 0 ; i < numberOfEnemies * numberOfLineEnemies; i++ ,x++)

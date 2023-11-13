@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class UiController : MonoBehaviour
 {
-    private GameObject windowPause;
-    private void OnEnable() {
+    GameObject windowPause;
+    void OnEnable() {
         EventManager.OnGameActive += Pause;
     }
-    private void OnDisable() {
+    void OnDisable() {
         EventManager.OnGameActive -= Pause;
     }
-    private void Start() {
+    void Start() {
         windowPause = transform.GetChild(1).gameObject;
     }
 
-    private void Pause(bool isActive)
+    void Pause(bool isActive)
     {
         windowPause.SetActive(!isActive) ;
     }

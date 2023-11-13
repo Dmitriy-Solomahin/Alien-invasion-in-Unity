@@ -6,48 +6,53 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private AudioSource gameOverSound;
-    private EnemyShipsControler enemiesController;
-    [SerializeField] private GameObject buletParent;
-    private GameObject player;
-    private bool gameIsActive = true;
+    AudioSource gameOverSound;
+    EnemyShipsControler enemiesController;
+    GameObject player;
+    bool gameIsActive = true;
 
-    private void OnEnable() {
+    void OnEnable() {
         EventManager.OnGameOver += GameOver;
         EventManager.OnGameActive += GamePause;
         EventManager.OnLevelsComplit += NextLevel;
     }    
-    private void OnDisable() {
+    void OnDisable() {
         EventManager.OnGameOver -= GameOver;
         EventManager.OnGameActive -= GamePause;
         EventManager.OnLevelsComplit -= NextLevel;
     }
-    private void Start() {
-        player = transform.GetChild(0).GetComponent<GameObject>();
+    void Start() {
+        player = transform.GetChild(0).gameObject;
         enemiesController = transform.GetChild(2).GetComponent<EnemyShipsControler>();
         gameOverSound = transform.GetComponent<AudioSource>();
     }
-    private void Update() {
+    void Update() {
         if(Input.GetKeyDown(KeyCode.Escape)){
             gameIsActive = !gameIsActive;
             EventManager.OnGameActive?.Invoke(gameIsActive);
         }
     }
-    private void NextLevel(int level){
-        CildrenDelete(buletParent.transform);
+    void NextLevel(int level){
+        player.GetComponent<Player>().DeliteBullets();
         player.transform.position = new Vector3(0,player.transform.position.y,player.transform.position.z);
+        //StartCoroutine(WaitBetweenLevels()); ломает игру!!!
+        enemiesController.CreateEnemies();
     }
-    private void GamePause(bool isActive){
+    void GamePause(bool isActive){
         gameIsActive = isActive;
         Time.timeScale = Convert.ToInt32(gameIsActive);
     }
-    private void GameOver(){
+    void GameOver(){
         Debug.Log("GameOver");
         gameOverSound.Play();
     }
-    private void CildrenDelete(Transform parent){
-        foreach(Transform cildren in parent){
-            Destroy(cildren.gameObject);
-        }
+    // void CildrenDelete(Transform parent){
+    //     foreach(Transform cildren in parent){
+    //         Destroy(cildren.gameObject);
+    //     }
+    //}
+    IEnumerator WaitBetweenLevels(){
+        yield return new WaitForSeconds(0.5f);
+        enemiesController.CreateEnemies();
     }
 }

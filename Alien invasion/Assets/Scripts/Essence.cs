@@ -7,7 +7,7 @@ public abstract class Essence : MonoBehaviour
     protected Health health; 
     protected int hp;
 
-    private void Awake() {
+    void Awake() {
         health = gameObject.GetComponent<Health>();
         hp = health.GetHealth();
     }

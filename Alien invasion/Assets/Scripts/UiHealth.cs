@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class UiHealth : MonoBehaviour
 {
-    [SerializeField] private GameObject[] healths;
-    private int health;
-    private void OnEnable() {
+    [SerializeField] GameObject[] healths;
+    int health;
+    void OnEnable() {
         EventManager.OnTakingDamage += TakingDamage;
     }
-    private void OnDisable() {
+    void OnDisable() {
         EventManager.OnTakingDamage -= TakingDamage;
     }
 
-    private void Awake() {
+    void Awake() {
         health = healths.Length;
     }
 

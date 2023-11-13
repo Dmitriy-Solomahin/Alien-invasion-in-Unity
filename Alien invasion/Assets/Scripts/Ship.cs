@@ -8,15 +8,16 @@ public abstract class Ship : Essence
     [SerializeField] GameObject prefabBang;
     [SerializeField] GameObject prefabBullet;
     [SerializeField] AudioSource shotAudio;
+    [SerializeField] List<GameObject> listBullets;
     protected int damage = 1;
     protected virtual void OnCollisionEnter2D(Collision2D other) {
         TakingDamage(other.gameObject);
     }
-    private void OnTriggerEnter2D(Collider2D other) {
+    void OnTriggerEnter2D(Collider2D other) {
         TakingDamage(other.gameObject);
     }
 
-    private void TakingDamage(GameObject other)
+    void TakingDamage(GameObject other)
     {
         if (other.tag != gameObject.tag && (other.tag == "Enemy" || other.tag == "Player")){
             Health otherHealth = other.GetComponent<Health>();
@@ -36,6 +37,13 @@ public abstract class Ship : Essence
         GameObject bullet = Instantiate(prefabBullet, transform.position - new Vector3(0, 0.5f,0),transform.rotation);
         bullet.tag = gameObject.tag;
         bullet.GetComponent<Health>().SetHealth(damage);
+        listBullets.Add(bullet);
         shotAudio?.Play();
+    }
+    public void DeliteBullets(){
+        foreach (GameObject bullet in listBullets)
+        {
+            Destroy(bullet);
+        }
     }
 }

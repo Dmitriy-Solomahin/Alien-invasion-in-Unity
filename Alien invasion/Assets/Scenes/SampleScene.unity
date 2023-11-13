@@ -819,6 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40100f7d4139d4f4a9071f7b76dcadd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buletParent: {fileID: 0}
 --- !u!4 &686330397
 Transform:
   m_ObjectHideFlags: 0
@@ -1041,6 +1042,7 @@ MonoBehaviour:
   prefabBang: {fileID: 6579796147561881755, guid: 26367a2b2ba940d40b6652d6c3e62a6e, type: 3}
   prefabBullet: {fileID: 5283573310278583065, guid: 5fe127ef7530c194fad4cb159af48d27, type: 3}
   shotAudio: {fileID: 458097265}
+  listBullets: []
   damageAudio: {fileID: 1737432725}
 --- !u!4 &987414622
 Transform:

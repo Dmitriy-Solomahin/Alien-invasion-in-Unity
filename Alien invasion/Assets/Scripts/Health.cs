@@ -6,7 +6,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] int health = 1;
     Essence obj;
-    private void Awake() {
+    void Awake() {
         obj = gameObject.GetComponent<Essence>();
     }
     public int GetHealth(){
